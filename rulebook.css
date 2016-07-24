@@ -8,6 +8,10 @@ body {
   text-align: justify;
 }
 
+a.link {
+  color: blue;
+}
+
 a.reference {
   color: black;
 }
