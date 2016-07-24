@@ -39,7 +39,7 @@ object Formatter {
   private val toAnnotate = Set("chapter", "section")
 
   def addIds(node: Node): Node = node match {
-    case e: Elem if toAnnotate.contains(e.label) => {
+    case e: Elem if toAnnotate.contains(e.label) && !e.attribute("id").isDefined => {
       e.copy(
         child = e.child.flatMap(addIds(_)), 
         attributes = new UnprefixedAttribute("id", "sec-" + getUnique, e.attributes))
@@ -127,8 +127,8 @@ object Formatter {
             }</a>
         }
         case "figure" => {
-          val name = node \@ "name"
-          buffer += <div class="figure" id={name}>
+          val id = node \@ "id"
+          buffer += <div class="figure" id={id}>
             { node.child.map(handle(_, new NodeBuffer())) }
             </div>
         }
@@ -174,7 +174,7 @@ object Formatter {
         }
         case "link" => {
           val to = node \@ "to"
-          buffer += <a href={ "#" + to }>{ 
+          buffer += <a href={ "#" + to } class="link">{ 
             node.child.map(handle(_, new NodeBuffer))
           }</a>
         }

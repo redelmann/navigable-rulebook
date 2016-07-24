@@ -25,7 +25,7 @@ $(function() {
     return true;
   });
 
-  $(".toc a").click(function(e) {
+  $(".toc a, a.link").click(function(e) {
     var target = $($(this).attr("href"));
 
     $('html, body').stop(true);
